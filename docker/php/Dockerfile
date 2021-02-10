@@ -6,6 +6,12 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd \
     && apt-get install -y git apt-utils zip unzip nodejs npm
+    
+        
+RUN npm intall n -g
+RUN n stable
+
+RUN apt purge -y nodejs npm
 
 #Composer install
 COPY --from=composer /usr/bin/composer /usr/bin/composer
