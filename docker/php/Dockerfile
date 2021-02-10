@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y \
         libpng-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd \
-    && apt-get install -y git apt-utils zip unzip
+    && apt-get install -y git apt-utils zip unzip nodejs npm
 
 #Composer install
 COPY --from=composer /usr/bin/composer /usr/bin/composer
