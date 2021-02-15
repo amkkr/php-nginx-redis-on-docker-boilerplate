@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get install -y git apt-utils zip unzip nodejs npm
     
         
-RUN npm intall n -g
+RUN npm install n -g
 RUN n stable
 
 RUN apt purge -y nodejs npm
