@@ -2,14 +2,14 @@ version: '3'
 
 services:
   php:
-    container_name: php
+    container_name: php-startup-sample
     build: ./docker/php
     volumes:
     - ./server:/var/www
 
   nginx:
     image: nginx
-    container_name: nginx
+    container_name: nginx-sample
     ports:
     - 80:80
     volumes:
@@ -20,7 +20,7 @@ services:
 
   db:
     image: mysql:5.7
-    container_name: db-host
+    container_name: db-sample
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: database
