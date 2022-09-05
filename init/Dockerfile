@@ -15,10 +15,11 @@ RUN pecl install redis && \
     docker-php-ext-enable redis
 
 COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
-COPY ./docker/php/config/www.conf /usr/local/etc/php-fpm.d/zzz-www.conf
+COPY ./ /var/www/html
 
 RUN docker-php-ext-install -j$(nproc) intl \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
-COPY ./docker/php/config/php.ini /usr/local/etc/php/php.ini
+## Application init
+# RUN composer create-project --prefer-dist laravel/lumen blog

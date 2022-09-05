@@ -1,27 +1,29 @@
 version: "3"
 
-nginx:
-  build:
-    context: .
-    dockerfile: ./docker/nginx/Dockerfile
-  depends_on:
-    - php
-  ports:
-    - "8080:8080"
-    - "8443:8443"
-  volumes:
-    - ./src/public:/var/www/html/public
-    - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+services:
 
-php:
-  build:
-    context: .
-    dockerfile: ./docker/php/Dockerfile
-  tty: true
-  volumes:
-    - ./src/var/www/html
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    depends_on:
+      - php
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    volumes:
+      - ./src/public:/var/www/html/public
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
 
-kvs:
-  image: redis:7-alpine
-  ports:
-    - "6379:6379"
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    tty: true
+    volumes:
+      - ./src:/var/www/html
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
