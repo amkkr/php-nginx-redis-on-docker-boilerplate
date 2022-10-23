@@ -6,7 +6,7 @@ Build PHP, nginx and Redis Development environment on Docker
 ```bash
 cd init
 docker compose up -d --build
-docker compose exec php ash
+docker compose exec php-init ash
 cd /var/www/html
 // If you create a Laravel project, make it laravel/laravel!
 composer create-project --prefer-dist laravel/lumen .
