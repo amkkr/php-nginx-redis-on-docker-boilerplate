@@ -23,6 +23,7 @@ RUN php -r "unlink('composer-setup.php');"
 
 
 RUN cd /var/www/html
+RUN composer create-project --prefer-dist laravel/lumen .
 RUN composer require --dev friendsofphp/php-cs-fixer
 RUN touch .php-cs-fixer.dist.php
 RUN composer require --dev phpstan/phpstan phpstan/extension-installer
