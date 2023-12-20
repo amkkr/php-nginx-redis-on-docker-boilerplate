@@ -1,24 +1,22 @@
-FROM php:8.0.23-zts-alpine3.16
+FROM php:8.2.12-bookworm
 
-# Timezone
-RUN apk add --update-cache --no-cache tzdata && \
-    cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-    apk del tzdata
+WORKDIR /var/www/html
 
-RUN apk add --update-cache --no-cache \
-    icu-dev \
-    git \
-    autoconf make g++ gcc cmake curl wget gzip
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        locales \
+    && apt-get -y autoremove \
+    && apt-get clean \
 
-# cache
-RUN pecl install redis && \
-    docker-php-ext-enable redis
+# 非rootで80番を開けるのに必要
+RUN setcap "cap_net_bind_service=+ep" /usr/local/bin/php
 
-COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
-COPY ./docker/php/config/www.conf /usr/local/etc/php-fpm.d/zzz-www.conf
+RUN groupadd --force -g $WWWGROUP sail \
+    && useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
 
-RUN docker-php-ext-install -j$(nproc) intl \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug
+COPY start-container /usr/local/bin/start-container
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY php.ini ${PHP_INI_DIR}/conf.d/99-sail.ini
+RUN chmod +x /usr/local/bin/start-container
 
-COPY ./docker/php/config/php.ini /usr/local/etc/php/php.ini
+ENTRYPOINT ["start-container"]
