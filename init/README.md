@@ -1,0 +1,3 @@
+# なにこれ
+初回プロジェクト構築用docker composeです
+project_root/README.mdに倣ってproject_root/src配下にアプリケーションが構築されたら削除して問題ありません。
