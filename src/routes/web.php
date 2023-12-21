@@ -24,7 +24,7 @@ $router->get('foo', function () {
     ];
 });
 
-$router->get('example', [
-    'as' => 'exams/{number}',
+$router->get('example/{number}', [
+    'as' => 'example/{number}',
     'uses' => 'ExampleController@handle',
 ]);
