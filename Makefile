@@ -36,4 +36,4 @@ test:
 	docker compose exec php ./vendor/bin/phpunit
 
 stan:
-	docker compose exec php ./vendoer/bin/phpstan 
+	docker compose exec php ./vendor/bin/phpstan 
