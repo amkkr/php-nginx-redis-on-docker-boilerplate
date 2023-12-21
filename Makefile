@@ -4,6 +4,9 @@ build:
 up:
 	docker compose up -d
 
+in:
+	docker compose exec php bash
+
 down:
 	docker compose down
 
@@ -32,5 +35,5 @@ fix:
 test:
 	docker compose exec php ./vendor/bin/phpunit
 
-in:
-	docker compose exec php bash
+stan:
+	docker compose exec php ./vendoer/bin/phpstan 
