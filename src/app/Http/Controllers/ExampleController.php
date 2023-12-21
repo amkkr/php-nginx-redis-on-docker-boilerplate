@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 class ExampleController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct()
+    public function handle()
     {
+        return \response()
+            ->json([
+                'id' => 'aaa',
+                'name' => 'aadfas',
+            ]);
     }
-    }
+}

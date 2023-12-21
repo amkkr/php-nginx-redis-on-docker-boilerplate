@@ -16,3 +16,15 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('foo', function () {
+    return [
+        'id' => 111,
+        'name' => 'foo111',
+    ];
+});
+
+$router->get('example', [
+    'as' => 'exams/{number}',
+    'uses' => 'ExampleController@handle',
+]);
