@@ -1,11 +1,10 @@
 version: "3"
 
 services:
-  php-app:
+  init-composer:
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
     tty: true
-    port: 8080:80
     volumes:
       - ./src:/var/www/html

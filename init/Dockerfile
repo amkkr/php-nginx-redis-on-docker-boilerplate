@@ -1,29 +1,23 @@
 FROM php:8.2.12-bookworm
 
-WORKDIR /var/www/html
-
-# Timezone
-RUN apt-get -y update && \
-    apt-get -y install git make cmake  g++ gcc wget curl gzip vim &&  \
+# apt installes
+RUN apt-get update -y && \
+    apt-get -y install git make cmake  g++ gcc wget curl gzip vim unzip &&  \
     apt-get -y autoremove && apt-get -y autoclean
 
-# cache
+# pecl install 
 RUN pecl install redis && \
     docker-php-ext-enable redis
 
-COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
+ENV SETUP_FILE_NAME='setup.php'
 
-## Application init
-# RUN composer create-project --prefer-dist laravel/lumen blog
+## get composer
+RUN php -r "copy('https://getcomposer.org/installer', '${SETUP_FILE_NAME}');" && \
+    php ${SETUP_FILE_NAME} && \
+    php -r "unlink('${SETUP_FILE_NAME}');" && \
+    mv ./composer.phar /bin/composer
 
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php -r "if (hash_file('sha384', 'composer-setup.php') === 'e21205b207c3ff031906575712edab6f13eb0b361f2085f1f1237b7126d785e826a450292b6cfd1d64d92e6563bbde02') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-RUN php composer-setup.php
-RUN php -r "unlink('composer-setup.php');"
+# containerはrootでは叩けない
+ENV COMPOSER_ALLOW_EXISTING_PROJECT_DIR=true
 
-
-RUN cd /var/www/html
-RUN composer create-project --prefer-dist laravel/lumen .
-RUN composer require --dev friendsofphp/php-cs-fixer
-RUN touch .php-cs-fixer.dist.php
-RUN composer require --dev phpstan/phpstan phpstan/extension-installer
+WORKDIR /var/www/html
