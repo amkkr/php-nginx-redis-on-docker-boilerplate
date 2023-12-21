@@ -1,24 +1,23 @@
-FROM php:8.0.23-zts-alpine3.16
+FROM php:8.2.12-bookworm
 
-# Timezone
-RUN apk add --update-cache --no-cache tzdata && \
-    cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-    apk del tzdata
+# apt installes
+RUN apt-get update -y && \
+    apt-get -y install git make cmake  g++ gcc wget curl gzip vim unzip &&  \
+    apt-get -y autoremove && apt-get -y autoclean
 
-RUN apk add --update-cache --no-cache \
-    icu-dev \
-    git \
-    autoconf make g++ gcc cmake curl wget gzip
-
-# cache
+# pecl install 
 RUN pecl install redis && \
     docker-php-ext-enable redis
 
-COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
+ENV SETUP_FILE_NAME='setup.php'
 
-RUN docker-php-ext-install -j$(nproc) intl \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug
+## get composer
+RUN php -r "copy('https://getcomposer.org/installer', '${SETUP_FILE_NAME}');" && \
+    php ${SETUP_FILE_NAME} && \
+    php -r "unlink('${SETUP_FILE_NAME}');" && \
+    mv ./composer.phar /bin/composer
 
-## Application init
-# RUN composer create-project --prefer-dist laravel/lumen blog
+# containerはrootでは叩けない
+ENV COMPOSER_ALLOW_EXISTING_PROJECT_DIR=true
+
+WORKDIR /var/www/html
