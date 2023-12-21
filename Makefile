@@ -25,3 +25,6 @@ test:
 
 serve:
 	docker compose exec php "php -S localhost:80 -t public"
+
+fix:
+	docker compose exec php ./vendor/bin/php-cs-fixer fix --diff ./
