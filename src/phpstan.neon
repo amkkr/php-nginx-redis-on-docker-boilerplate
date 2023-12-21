@@ -2,7 +2,7 @@ parameters:
     level: max
     paths:
         - app
-    ignoreErrors:
-        - '#Access to an undefined property App\\[\w\\]+::#'
     excludePaths:
         - app/vendor
+        - app/Console
+        - app/Exceptions
