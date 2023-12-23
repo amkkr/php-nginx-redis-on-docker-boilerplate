@@ -1,1 +1,2 @@
 docker/db/data/
+.php-cs-fixer.cache

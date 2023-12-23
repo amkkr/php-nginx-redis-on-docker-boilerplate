@@ -1,25 +1,12 @@
-FROM php:8.0.23-zts-alpine3.16
+FROM php:8.2.12-fpm-bullseye
 
-# Timezone
-RUN apk add --update-cache --no-cache tzdata && \
-    cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-    apk del tzdata
+WORKDIR /var/www/html
 
-RUN apk add --update-cache --no-cache \
-    icu-dev \
-    git \
-    autoconf make g++ gcc cmake curl wget gzip
+RUN apt-get update &&\
+    apt-get install -y --no-install-recommends \
+    locales unzip git make cmake zip g++ gcc wget curl gzip vim && \
+    apt-get -y autoremove && \
+    apt-get clean && \
+    docker-php-ext-install pdo_mysql
 
-# cache
-RUN pecl install redis && \
-    git clone https://github.com/phpredis/phpredis.git /usr/src/php/ext/redis && \
-    docker-php-ext-install redis
-
-COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
 COPY ./docker/php/config/www.conf /usr/local/etc/php-fpm.d/zzz-www.conf
-
-RUN docker-php-ext-install -j$(nproc) intl \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug
-
-COPY ./docker/php/config/php.ini /usr/local/etc/php/php.ini
