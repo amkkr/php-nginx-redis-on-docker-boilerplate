@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+use Laravel\Lumen\Http\ResponseFactory;
+
 class ExampleController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct()
+    public function handle(int $number = 0): JsonResponse
     {
+        $response = new ResponseFactory();
+
+        return $response
+            ->json([
+                'id' => 'aaa',
+                'name' => 'aadfas',
+                'number' => $number,
+            ])
+        ;
     }
-    }
+}

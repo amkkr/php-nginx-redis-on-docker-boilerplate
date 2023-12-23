@@ -2,5 +2,7 @@
   "php-cs-fixer.executablePath": "${workspaceFolder}/src/vendor/bin/php-cs-fixer",
   "php-cs-fixer.config": "${workspaceFolder}/src/.php-cs-fixer.dist.php",
   "php-cs-fixer.rules": "@PSR12",
-  "php-cs-fixer.onsave": true
+  "php-cs-fixer.onsave": true,
+  "phpstan.binPath": "src/vendor/bin/phpstan",
+  "phpstan.configFile": "${workspaceFolder}/src/phpstan.neon",
 }

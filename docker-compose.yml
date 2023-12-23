@@ -20,4 +20,13 @@ services:
     tty: true
     volumes:
       - ./src:/var/www/html
-      - ./docker/development/api/php.ini:/usr/local/etc/php/conf.d/php.ini:delegated
+      - ./docker/php/config/php.ini:/usr/local/etc/php/conf.d/php.ini:delegated
+    depends_on:
+    - redis
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - "./src/data/redis:/data"
+      - "./docker/redis/redis.conf:/etc/redis.conf"

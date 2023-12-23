@@ -23,9 +23,9 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
+$app->withFacades();
 
-// $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -112,4 +112,6 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
+$app->register(Laravel\Tinker\TinkerServiceProvider::class);
 return $app;

@@ -1,0 +1,4 @@
+# なにこれ
+初回プロジェクト構築用docker composeです
+project_root/README.mdに倣ってproject_root/src配下にアプリケーションを構築、初期化してください。
+また、composerを利用してパッケージを追加等する場合もこちらを使ってください。
