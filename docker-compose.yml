@@ -27,3 +27,6 @@ services:
     image: redis:7-alpine
     ports:
       - "6379:6379"
+    volumes:
+      - "./src/data/redis:/data"
+      - "./docker/redis/redis.conf:/etc/redis.conf"
