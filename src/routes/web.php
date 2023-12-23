@@ -28,3 +28,8 @@ $router->get('example/{number}', [
     'as' => 'example/{number}',
     'uses' => 'ExampleController@handle',
 ]);
+
+$router->get('init', [
+    'as' => 'init',
+    'uses' => 'InitController@handle',
+]);
