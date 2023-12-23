@@ -13,6 +13,8 @@ composer create-project --prefer-dist laravel/lumen /var/www/html/
 composer require --dev friendsofphp/php-cs-fixer
 touch .php-cs-fixer.dist.php
 composer require --dev phpstan/phpstan phpstan/extension-installer
+composer require predis/predis
+composer require illuminate/redis
 
 // complete initialized!!!
 ```

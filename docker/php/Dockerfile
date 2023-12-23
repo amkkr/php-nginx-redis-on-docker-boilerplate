@@ -7,6 +7,7 @@ RUN apt-get update &&\
     locales unzip git make cmake zip g++ gcc wget curl gzip vim && \
     apt-get -y autoremove && \
     apt-get clean && \
-    docker-php-ext-install pdo_mysql
+    pecl install redis && \
+    docker-php-ext-enable redis
 
 COPY ./docker/php/config/www.conf /usr/local/etc/php-fpm.d/zzz-www.conf

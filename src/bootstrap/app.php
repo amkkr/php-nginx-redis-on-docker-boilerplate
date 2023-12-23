@@ -25,7 +25,7 @@ $app = new Laravel\Lumen\Application(
 
 $app->withFacades();
 
-$app->withEloquent();
+// $app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -112,4 +112,6 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
+$app->register(Laravel\Tinker\TinkerServiceProvider::class);
+$app->configure('database');
 return $app;
