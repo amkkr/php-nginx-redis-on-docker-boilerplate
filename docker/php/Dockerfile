@@ -12,7 +12,8 @@ RUN apk add --update-cache --no-cache \
 
 # cache
 RUN pecl install redis && \
-    docker-php-ext-enable redis
+    git clone https://github.com/phpredis/phpredis.git /usr/src/php/ext/redis && \
+    docker-php-ext-install redis
 
 COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
 COPY ./docker/php/config/www.conf /usr/local/etc/php-fpm.d/zzz-www.conf
