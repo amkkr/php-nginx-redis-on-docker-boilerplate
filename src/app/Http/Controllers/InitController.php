@@ -6,6 +6,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Redis;
 use Laravel\Lumen\Http\ResponseFactory;
 
+/**
+ * やけっぱちseedデータ生成 in 2023
+ */
 class InitController extends Controller
 {
     public function handle(): JsonResponse
@@ -319,8 +322,9 @@ class InitController extends Controller
 
         $decoded = json_decode($json, true);
         foreach ($decoded['data'] as $index => $value) {
+            echo $index;
             Redis::set(
-                "USER_{$index}",
+                "{$index}",
                 "{
                     'id': {$value['id']},
                     'name': {$value['name']},
