@@ -21,6 +21,8 @@ services:
     volumes:
       - ./src:/var/www/html
       - ./docker/php/config/php.ini:/usr/local/etc/php/conf.d/php.ini:delegated
+    depends_on:
+    - redis
   redis:
     image: redis:7-alpine
     ports:
